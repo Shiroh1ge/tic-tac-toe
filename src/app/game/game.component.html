@@ -1,13 +1,40 @@
-<div class="game-container">
-    <h1>Tac Tac Toe</h1>
+<div class="page-wrapper">
+    <div class="game-container">
+        <h1>Tac Tac Toe</h1>
 
-    <div class="game">
-        <app-cell *ngFor="let cell of cells; let i = index"
-                  [currentSymbol]="getSymbol(i)"
-                  (click)="markCell(i)"></app-cell>
+        <div class="game">
+            <app-cell *ngFor="let cell of cells; let i = index"
+                      [currentSymbol]="getSymbol(i)"
+                      [isDisabled]="currentGame.isGameOver"
+                      (onMarked)="markCell(i)"
+            ></app-cell>
+        </div>
+
+        <div class="winner-container">
+            <h2>Winner: </h2>
+            <span *ngIf="currentGame.winner === GameSymbol.X">Player 1</span>
+            <span *ngIf="currentGame.winner === GameSymbol.O">Player 2</span>
+            <span *ngIf="currentGame.isDraw">Draw</span>
+        </div>
+
+        <div class="new-game-button-container" *ngIf="currentGame.isGameOver">
+            <button (click)="resetGame()">New Game</button>
+        </div>
     </div>
 
-    <div class="winner-container">
-        <h2>Winner: {{currentGame.winner}}</h2>
+    <div class="completed-games-container">
+        <h1>Completed Games</h1>
+
+        <ul class="completed-games-list">
+            <li class="game" *ngFor="let game of completedGames; let i = index">
+                <span>Game {{i}} winner:
+                    <b *ngIf="game.winner === GameSymbol.X">Player 1</b>
+                    <b *ngIf="game.winner === GameSymbol.O">Player 2</b>
+                    <b *ngIf="game.isDraw">Draw</b>
+                </span>
+            </li>
+        </ul>
     </div>
+
 </div>
+

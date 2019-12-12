@@ -14,38 +14,20 @@ export class GameComponent implements OnInit, OnDestroy {
     private componentAlive: boolean = true;
     public cells: any[] = new Array(9);
     public currentGame: Game;
+    public completedGames: Game[];
+    public GameSymbol = GameSymbol;
 
     constructor(private gameSelectors: GameSelectors, private gameActions: GameActions) {
     }
 
     public markCell(index: number) {
-        let playerMoves = [];
-
-        switch (this.currentGame.currentSymbol) {
-            case GameSymbol.X:
-                playerMoves = [...this.currentGame.player1Moves, index];
-                this.gameActions.updateGame({
-                    gameId: this.currentGame.id,
-                    updateData: {
-                        ...this.currentGame,
-                        player1Moves: playerMoves
-                    }
-                });
-                break;
-            case GameSymbol.O:
-                console.log('this player moves', this.currentGame.player2Moves);
-                playerMoves = [...this.currentGame.player2Moves, index];
-                this.gameActions.updateGame({
-                    gameId: this.currentGame.id,
-                    updateData: {
-                        ...this.currentGame,
-                        player2Moves: playerMoves
-                    }
-                });
-
-                break;
-
-        }
+        this.gameActions.updateGame({
+            gameId: this.currentGame.id,
+            updateData: {
+                ...this.currentGame,
+                player1Moves: [...this.currentGame.player1Moves, index]
+            }
+        });
 
 
     }
@@ -62,6 +44,10 @@ export class GameComponent implements OnInit, OnDestroy {
         return null;
     }
 
+    public resetGame() {
+        this.gameActions.resetCurrentGame();
+    }
+
     ngOnInit() {
         this.gameSelectors.currentGame$
             .pipe(
@@ -69,6 +55,13 @@ export class GameComponent implements OnInit, OnDestroy {
             )
             .subscribe(game => {
                 this.currentGame = game;
+            });
+        this.gameSelectors.completedGames$
+            .pipe(
+                takeWhile(() => this.componentAlive)
+            )
+            .subscribe(games => {
+                this.completedGames = games;
             });
     }
 

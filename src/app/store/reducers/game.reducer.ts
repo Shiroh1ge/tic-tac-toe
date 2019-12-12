@@ -1,12 +1,11 @@
 import { Action, createReducer, createSelector, on } from '@ngrx/store';
 import { Game } from '../../models/game.model';
-import { GameSymbol } from '../../models/player.model';
 import { GameActions } from '../actions/game.actions';
 import { GlobalState } from '../store';
 
 export interface GameState {
     currentGame: Game;
-    games: Game[];
+    completedGames: Game[];
 }
 
 export const gameInitialState: GameState = {
@@ -14,11 +13,12 @@ export const gameInitialState: GameState = {
         id: 0,
         winner: undefined,
         isDraw: false,
-        currentSymbol: GameSymbol.X,
+        isGameOver: false,
+        winningLine: [],
         player1Moves: [],
         player2Moves: []
     },
-    games: []
+    completedGames: []
 };
 
 const reducer = createReducer(
@@ -30,6 +30,17 @@ const reducer = createReducer(
             ...payload
         }
     })),
+    on(GameActions.addGame, (state, { payload }): GameState => ({
+        ...state,
+        completedGames: [
+            ...state.completedGames,
+            payload
+        ]
+    })),
+    on(GameActions.resetCurrentGame, (state): GameState => ({
+        ...state,
+        currentGame: gameInitialState.currentGame
+    }))
 );
 
 
@@ -38,7 +49,9 @@ export function gameReducer(state: GameState | undefined, action: Action) {
 }
 
 const getGame = (state: GlobalState) => state.game.currentGame;
+const getGames = (state: GlobalState) => state.game.completedGames;
 
 export const gameSelector = createSelector([getGame], (game) => game);
+export const completedGamesSelector = createSelector([getGames], (games) => games);
 
 

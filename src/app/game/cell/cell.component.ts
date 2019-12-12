@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GameSymbol } from '../../models/player.model';
 
 @Component({
@@ -8,9 +8,15 @@ import { GameSymbol } from '../../models/player.model';
 })
 export class CellComponent implements OnInit {
     @Input() currentSymbol: GameSymbol | null = null;
+    @Input() isDisabled: boolean = false;
+    @Output() onMarked = new EventEmitter();
     public GameSymbol = GameSymbol;
 
     constructor() {
+    }
+
+    public mark() {
+        this.onMarked.emit();
     }
 
     ngOnInit() {

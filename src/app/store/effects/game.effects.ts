@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, exhaustMap, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { Game } from '../../models/game.model';
 import { GameSymbol } from '../../models/player.model';
 import { GameActions } from '../actions/game.actions';
+
+const GAME_INDEXES = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
 const WINNING_LINES = [
     [0, 1, 2],  // top row
@@ -21,36 +23,56 @@ const WINNING_LINES = [
 export class GameEffects {
 
     constructor(
-        private actions$: Actions
+        private actions$: Actions,
+        private gameActions: GameActions
     ) {
     }
 
+    private getPlayer2Move(game: Game): Game {
+        const availableIndexes = GAME_INDEXES
+            .filter(index => !game.player1Moves.includes(index) && !game.player2Moves.includes(index));
+        const player2MoveIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
+
+        return {
+            ...game,
+            player2Moves: [...game.player2Moves, player2MoveIndex]
+        };
+
+    }
+
     private checkForWinner(game: Game) {
-        const isPlayer1Winner = WINNING_LINES.some(line => {
+        const player1WinningLine = WINNING_LINES.find(line => {
             return line.every(index => game.player1Moves.includes(index));
         });
 
-        if (isPlayer1Winner) {
+        const player2WinningLine = WINNING_LINES.find(line => {
+            return line.every(index => game.player2Moves.includes(index));
+        });
+
+        if (player1WinningLine) {
             return {
                 ...game,
+                isGameOver: true,
+                winningLine: player1WinningLine,
                 winner: GameSymbol.X
             };
         }
 
-        const isPlayer2Winner = WINNING_LINES.some(line => {
-            return line.every(index => game.player2Moves.includes(index));
-        });
-
-        if (isPlayer2Winner) {
+        if (player2WinningLine) {
             return {
                 ...game,
+                isGameOver: true,
+                winningLine: player2WinningLine,
                 winner: GameSymbol.O
             };
         }
 
+        console.log('plrs moves', game.player1Moves.length, game.player2Moves.length);
+
         if (game.player1Moves.length + game.player2Moves.length === 9) {
             return {
                 ...game,
+                isGameOver: true,
                 isDraw: true
             };
         }
@@ -58,17 +80,14 @@ export class GameEffects {
         return game;
     }
 
-    changeCurrentPlayer(game: Game) {
-        return {
-            ...game,
-            currentSymbol: game.currentSymbol === GameSymbol.X ? GameSymbol.O : GameSymbol.X
-        };
-    }
-
     // Typically a backend API call
     private updateGame({ gameId, updateData }: { gameId: number; updateData: Game }): Observable<Game> {
-        let updatedGame = this.checkForWinner(updateData);
-        updatedGame = this.changeCurrentPlayer(updatedGame);
+        let updatedGame = this.getPlayer2Move(updateData);
+        updatedGame = this.checkForWinner(updatedGame);
+
+        if (updatedGame.isGameOver) {
+            this.gameActions.addGame(updatedGame);
+        }
 
         return new Observable(observer => {
             return observer.next(updatedGame);

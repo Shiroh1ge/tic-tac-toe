@@ -1,4 +1,7 @@
 .cell-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     width: 90px;
     height: 90px;
@@ -10,7 +13,7 @@
         background: rgba(0, 0, 0, 0.2);
     }
 
-    &.checked {
+    &.disabled {
         pointer-events: none;
     }
 
