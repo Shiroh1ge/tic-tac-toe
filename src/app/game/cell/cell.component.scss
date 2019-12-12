@@ -1,0 +1,12 @@
+.cell-container {
+    box-sizing: border-box;
+    width: 90px;
+    height: 90px;
+    border: 1px grey solid;
+    transition: background 100ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.2);
+    }
+}
