@@ -7,15 +7,10 @@ import { GameSymbol } from '../../models/player.model';
     styleUrls: ['./cell.component.scss']
 })
 export class CellComponent implements OnInit {
-    @Input() currentSymbol: GameSymbol | null;
-    @Input() onMarked = new EventEmitter();
+    @Input() currentSymbol: GameSymbol | null = null;
     public GameSymbol = GameSymbol;
 
     constructor() {
-    }
-
-    public mark() {
-        this.onMarked.emit();
     }
 
     ngOnInit() {

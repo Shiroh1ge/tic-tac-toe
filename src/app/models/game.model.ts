@@ -1,8 +1,11 @@
-import { Player } from './player.model';
+import { GameSymbol, Player } from './player.model';
 
 export interface Game {
-    winner: Player | null;
+    id: number;
+    // We can substitute winner with a real player, currently we're using the player with the winning symbol
+    winner: GameSymbol | null;
     isDraw: boolean;
+    currentSymbol: GameSymbol;
     player1Moves: number[];
     player2Moves: number[];
 }

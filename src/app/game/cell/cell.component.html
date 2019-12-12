@@ -1,4 +1,7 @@
-<div class="cell-container" (click)="mark()">
-    <h1 *ngIf="currentSymbol === GameSymbol.O">O</h1>
-    <h1 *ngIf="currentSymbol === GameSymbol.X">X</h1>
+<div class="cell-container"
+     [ngClass]="{
+        checked: currentSymbol !== null
+}">
+    <h1 *ngIf="currentSymbol === GameSymbol.X" class="player-1">X</h1>
+    <h1 *ngIf="currentSymbol === GameSymbol.O" class="player-2">O</h1>
 </div>

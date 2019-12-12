@@ -1,5 +1,7 @@
-import { Action, createReducer, createSelector } from '@ngrx/store';
+import { Action, createReducer, createSelector, on } from '@ngrx/store';
 import { Game } from '../../models/game.model';
+import { GameSymbol } from '../../models/player.model';
+import { GameActions } from '../actions/game.actions';
 import { GlobalState } from '../store';
 
 export interface GameState {
@@ -9,8 +11,10 @@ export interface GameState {
 
 export const gameInitialState: GameState = {
     currentGame: {
-        winner: null,
+        id: 0,
+        winner: undefined,
         isDraw: false,
+        currentSymbol: GameSymbol.X,
         player1Moves: [],
         player2Moves: []
     },
@@ -18,7 +22,14 @@ export const gameInitialState: GameState = {
 };
 
 const reducer = createReducer(
-    gameInitialState
+    gameInitialState,
+    on(GameActions.updateGameSuccess, (state, { payload }): GameState => ({
+        ...state,
+        currentGame: {
+            ...state.currentGame,
+            ...payload
+        }
+    })),
 );
 
 

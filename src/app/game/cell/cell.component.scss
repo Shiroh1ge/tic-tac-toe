@@ -9,4 +9,16 @@
     &:hover {
         background: rgba(0, 0, 0, 0.2);
     }
+
+    &.checked {
+        pointer-events: none;
+    }
+
+    .player-1 {
+        color: red;
+    }
+
+    .player-2 {
+        color: blue;
+    }
 }
