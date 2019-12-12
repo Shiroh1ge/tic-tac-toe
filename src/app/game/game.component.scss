@@ -1,7 +1,27 @@
 .page-wrapper {
     display: flex;
+    padding: 20px;
 }
 
+.btn-primary {
+    position: relative;
+
+    display: block;
+    margin: 30px auto;
+    padding: 0;
+
+    overflow: hidden;
+
+    border-width: 0;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+    background-color: #2ecc71;
+    color: #ecf0f1;
+
+    transition: background-color .3s;
+}
 .game-container {
     display: flex;
     flex-direction: column;
@@ -9,6 +29,7 @@
     margin-right: 40px;
 
     .game {
+        box-sizing: initial;
         display: flex;
         flex-wrap: wrap;
         width: 270px;
@@ -20,16 +41,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 20px 0;
+    }
+
+    .winner-text {
+        font-size: 20px;
     }
 }
 
 .completed-games-container {
-
-
     .completed-games-list {
-        border: 1px grey solid;
         width: 300px;
         min-height: 400px;
+        padding: 20px;
+        border: 1px grey solid;
     }
 
 }

@@ -67,9 +67,7 @@ export class GameEffects {
             };
         }
 
-        console.log('plrs moves', game.player1Moves.length, game.player2Moves.length);
-
-        if (game.player1Moves.length + game.player2Moves.length === 9) {
+        if (game.player1Moves.length + game.player2Moves.length === 9 || game.player1Moves.length + game.player2Moves.length === 10) {
             return {
                 ...game,
                 isGameOver: true,

@@ -10,15 +10,15 @@
             ></app-cell>
         </div>
 
-        <div class="winner-container">
-            <h2>Winner: </h2>
-            <span *ngIf="currentGame.winner === GameSymbol.X">Player 1</span>
-            <span *ngIf="currentGame.winner === GameSymbol.O">Player 2</span>
-            <span *ngIf="currentGame.isDraw">Draw</span>
+        <div class="winner-container valign-center">
+            <span class="winner-text">Winner: </span>
+            <b *ngIf="currentGame.winner === GameSymbol.X">Player 1</b>
+            <b *ngIf="currentGame.winner === GameSymbol.O">Player 2</b>
+            <b *ngIf="currentGame.isDraw">Draw</b>
         </div>
 
         <div class="new-game-button-container" *ngIf="currentGame.isGameOver">
-            <button (click)="resetGame()">New Game</button>
+            <button (click)="resetGame()" mat-flat-button color="primary">New Game</button>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
 
         <ul class="completed-games-list">
             <li class="game" *ngFor="let game of completedGames; let i = index">
-                <span>Game {{i}} winner:
+                <span>- Game {{i}} winner:
                     <b *ngIf="game.winner === GameSymbol.X">Player 1</b>
                     <b *ngIf="game.winner === GameSymbol.O">Player 2</b>
                     <b *ngIf="game.isDraw">Draw</b>

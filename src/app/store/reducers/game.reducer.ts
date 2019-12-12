@@ -11,7 +11,7 @@ export interface GameState {
 export const gameInitialState: GameState = {
     currentGame: {
         id: 0,
-        winner: undefined,
+        winner: null,
         isDraw: false,
         isGameOver: false,
         winningLine: [],
