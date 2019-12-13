@@ -4,8 +4,7 @@
 
         <ul class="game">
             <li *ngFor="let cell of cells; let i = index">
-                <app-cell
-                          [currentSymbol]="getSymbol(i)"
+                <app-cell [currentSymbol]="getSymbol(i)"
                           [isDisabled]="currentGame.isGameOver"
                           [isWinningCell]="currentGame.winningLine.includes(i)"
                           (onMarked)="markCell(i)"
@@ -13,10 +12,18 @@
             </li>
         </ul>
 
+        <div class="players-container valign-center">
+            <span>{{currentGame?.player1?.username}}</span>
+            <span>VS</span>
+            <span>{{currentGame?.player2?.username}}</span>
+        </div>
+
         <div class="winner-container valign-center">
-            <span class="winner-text">Winner: </span>
-            <b *ngIf="currentGame.winner">{{currentGame?.winner?.username}}</b>
+            <span class="winner-text">Winner:
+                <b *ngIf="currentGame.winner">{{currentGame?.winner?.username}}</b>
             <b *ngIf="currentGame.isDraw">Draw</b>
+            </span>
+
         </div>
 
         <div class="new-game-button-container" *ngIf="currentGame.isGameOver">
@@ -29,12 +36,18 @@
 
         <ul class="completed-games-list">
             <li class="game" *ngFor="let game of completedGames; let i = index">
-                <span>- Game {{i}} winner:
-                    <b *ngIf="currentGame.winner">{{currentGame?.winner?.username}}</b>
+                <span>- Game {{i+1}} winner:
+                    <b *ngIf="game.winner">{{game?.winner?.username}}</b>
                     <b *ngIf="game.isDraw">Draw</b>
                 </span>
             </li>
         </ul>
+
+        <div class="score-container center">
+            <h2>Total Score:</h2>
+
+            <span class="score">{{totalScore[0]}} - {{totalScore[1]}}</span>
+        </div>
 
     </div>
 

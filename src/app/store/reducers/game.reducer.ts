@@ -29,8 +29,6 @@ export const gameInitialState: GameState = {
     completedGames: []
 };
 
-
-
 const reducer = createReducer(
     gameInitialState,
     on(GameActions.makeMoveSuccess, (state, { payload }): GameState => ({

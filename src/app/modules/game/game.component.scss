@@ -32,14 +32,25 @@
     .winner-text {
         font-size: 20px;
     }
+
+    .players-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        width: 100%;
+    }
 }
 
 .completed-games-container {
     .completed-games-list {
         width: 300px;
-        min-height: 400px;
+        min-height: 270px;
         padding: 20px;
         border: 1px grey solid;
+    }
+
+    .score {
+        font-size: 26px;
     }
 
 }

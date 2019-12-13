@@ -14,13 +14,13 @@ export class GameComponent implements OnInit, OnDestroy {
     public cells: any[] = new Array(9);
     public currentGame: Game;
     public completedGames: Game[];
-    public GameSymbol = GameSymbol;
+    public totalScore: number[] = [0, 0];
 
     constructor(private gameSelectors: GameSelectors, private gameActions: GameActions) {
     }
 
     public markCell(index: number) {
-        this.gameActions.updateGame({
+        this.gameActions.makeMove({
             gameId: this.currentGame.id,
             updateData: {
                 ...this.currentGame,
@@ -59,6 +59,12 @@ export class GameComponent implements OnInit, OnDestroy {
             )
             .subscribe(games => {
                 this.completedGames = games;
+
+                const player1WonGames = games.filter(game => game.winner.id === game.player1.id);
+                const player2WonGames = games.filter(game => game.winner.id === game.player2.id);
+
+                this.totalScore[0] = player1WonGames.length;
+                this.totalScore[1] = player2WonGames.length;
             });
     }
 

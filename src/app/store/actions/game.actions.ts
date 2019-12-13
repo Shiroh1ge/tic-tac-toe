@@ -33,7 +33,7 @@ export class GameActions {
 
     }
 
-    public updateGame(updateData: { gameId: number; updateData: Game }) {
+    public makeMove(updateData: { gameId: number; updateData: Game }) {
         return this.store.dispatch(GameActions.makeMove({ payload: updateData }));
     }
 
