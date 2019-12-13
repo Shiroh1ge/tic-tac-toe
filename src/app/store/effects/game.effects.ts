@@ -71,7 +71,7 @@ export class GameEffects {
             };
         }
 
-        if (game.player1Moves.length + game.player2Moves.length === 9 || game.player1Moves.length + game.player2Moves.length === 10) {
+        if (game.player1Moves.length + game.player2Moves.length === 9) {
             return {
                 ...game,
                 isGameOver: true,

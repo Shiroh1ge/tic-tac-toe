@@ -60,8 +60,8 @@ export class GameComponent implements OnInit, OnDestroy {
             .subscribe(games => {
                 this.completedGames = games;
 
-                const player1WonGames = games.filter(game => game.winner.id === game.player1.id);
-                const player2WonGames = games.filter(game => game.winner.id === game.player2.id);
+                const player1WonGames = games.filter(game => game.winner && game.winner.id === game.player1.id);
+                const player2WonGames = games.filter(game => game.winner && game.winner.id === game.player2.id);
 
                 this.totalScore[0] = player1WonGames.length;
                 this.totalScore[1] = player2WonGames.length;
