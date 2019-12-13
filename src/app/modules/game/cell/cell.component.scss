@@ -17,6 +17,15 @@
         pointer-events: none;
     }
 
+    &.winning-cell {
+        background: #00ce00;
+    }
+
+    h1 {
+        font-size: 40px;
+        margin: 0;
+    }
+
     .player-1 {
         color: red;
     }

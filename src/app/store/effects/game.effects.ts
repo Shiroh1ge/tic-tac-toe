@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { Game } from '../../models/game.model';
-import { GameSymbol } from '../../models/player.model';
+import { Game, GameSymbol } from '../../models/game.model';
 import { GameActions } from '../actions/game.actions';
 
 const GAME_INDEXES = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -31,6 +30,11 @@ export class GameEffects {
     private getPlayer2Move(game: Game): Game {
         const availableIndexes = GAME_INDEXES
             .filter(index => !game.player1Moves.includes(index) && !game.player2Moves.includes(index));
+
+        if (!availableIndexes.length) {
+            return game;
+        }
+
         const player2MoveIndex = availableIndexes[Math.floor(Math.random() * availableIndexes.length)];
 
         return {
@@ -54,7 +58,7 @@ export class GameEffects {
                 ...game,
                 isGameOver: true,
                 winningLine: player1WinningLine,
-                winner: GameSymbol.X
+                winner: game.player1
             };
         }
 
@@ -63,7 +67,7 @@ export class GameEffects {
                 ...game,
                 isGameOver: true,
                 winningLine: player2WinningLine,
-                winner: GameSymbol.O
+                winner: game.player2
             };
         }
 
@@ -79,7 +83,7 @@ export class GameEffects {
     }
 
     // Typically a backend API call
-    private updateGame({ gameId, updateData }: { gameId: number; updateData: Game }): Observable<Game> {
+    private makeMove({ gameId, updateData }: { gameId: number; updateData: Game }): Observable<Game> {
         let updatedGame = this.getPlayer2Move(updateData);
         updatedGame = this.checkForWinner(updatedGame);
 
@@ -92,12 +96,12 @@ export class GameEffects {
         });
     }
 
-    updateGame$ = createEffect(() => this.actions$.pipe(
-        ofType<any>(GameActions.updateGame),
+    makeMove$ = createEffect(() => this.actions$.pipe(
+        ofType<any>(GameActions.makeMove),
         switchMap(action => {
-            return this.updateGame(action.payload)
+            return this.makeMove(action.payload)
                 .pipe(
-                    map(game => ({ type: GameActions.updateGameSuccess.type, payload: game })),
+                    map(game => ({ type: GameActions.makeMoveSuccess.type, payload: game })),
                     catchError(() => EMPTY)
                 );
         })

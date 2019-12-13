@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GameSymbol } from '../../../models/player.model';
+import { GameSymbol } from '../../../models/game.model';
 
 @Component({
     selector: 'app-cell',
@@ -8,6 +8,7 @@ import { GameSymbol } from '../../../models/player.model';
 })
 export class CellComponent implements OnInit {
     @Input() currentSymbol: GameSymbol | null = null;
+    @Input() isWinningCell: boolean = false;
     @Input() isDisabled: boolean = false;
     @Output() onMarked = new EventEmitter();
     public GameSymbol = GameSymbol;

@@ -1,12 +1,18 @@
-import { GameSymbol, Player } from './player.model';
+import { Player } from './player.model';
+
+export enum GameSymbol {
+    X = 'X',
+    O = 'O'
+}
 
 export interface Game {
     id: number;
-    // We can substitute winner with a real player, currently we're using the player with the winning symbol
-    winner: GameSymbol | null;
+    winner: Player | null;
     isDraw: boolean;
     isGameOver: boolean;
     winningLine: number[];
+    player1: Player;
+    player2: Player;
     player1Moves: number[];
     player2Moves: number[];
 }

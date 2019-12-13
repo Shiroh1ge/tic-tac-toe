@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
-import { Game } from '../../models/game.model';
-import { GameSymbol } from '../../models/player.model';
+import { Game, GameSymbol } from '../../models/game.model';
 import { GameActions } from '../../store/actions/game.actions';
 import { GameSelectors } from '../../store/selectors/game.selectors';
 
@@ -28,8 +27,6 @@ export class GameComponent implements OnInit, OnDestroy {
                 player1Moves: [...this.currentGame.player1Moves, index]
             }
         });
-
-
     }
 
     public getSymbol(index: number) {

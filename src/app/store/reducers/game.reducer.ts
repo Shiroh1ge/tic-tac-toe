@@ -15,15 +15,25 @@ export const gameInitialState: GameState = {
         isDraw: false,
         isGameOver: false,
         winningLine: [],
+        player1: {
+            id: 0,
+            username: 'Player 1'
+        },
+        player2: {
+            id: 1,
+            username: 'Player 2'
+        },
         player1Moves: [],
         player2Moves: []
     },
     completedGames: []
 };
 
+
+
 const reducer = createReducer(
     gameInitialState,
-    on(GameActions.updateGameSuccess, (state, { payload }): GameState => ({
+    on(GameActions.makeMoveSuccess, (state, { payload }): GameState => ({
         ...state,
         currentGame: {
             ...state.currentGame,

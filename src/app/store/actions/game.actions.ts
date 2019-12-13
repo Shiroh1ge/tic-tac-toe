@@ -3,13 +3,13 @@ import { createAction, props, Store } from '@ngrx/store';
 import { Game } from '../../models/game.model';
 import { GlobalState } from '../store';
 
-const updateGame = createAction(
-    'UPDATE_GAME',
+const makeMove = createAction(
+    'MAKE_MOVE',
     props<{ payload: { gameId: number; updateData: Partial<Game> } }>()
 );
 
-const updateGameSuccess = createAction(
-    'UPDATE_GAME_SUCCESS',
+const makeMoveSuccess = createAction(
+    'MAKE_MOVE_SUCCESS',
     props<{ payload: Game }>()
 );
 
@@ -24,9 +24,9 @@ const resetCurrentGame = createAction(
 
 @Injectable({ providedIn: 'root' })
 export class GameActions {
-    public static updateGame = updateGame;
+    public static makeMove = makeMove;
     public static addGame = addGame;
-    public static updateGameSuccess = updateGameSuccess;
+    public static makeMoveSuccess = makeMoveSuccess;
     public static resetCurrentGame = resetCurrentGame;
 
     constructor(private store: Store<GlobalState>) {
@@ -34,7 +34,7 @@ export class GameActions {
     }
 
     public updateGame(updateData: { gameId: number; updateData: Game }) {
-        return this.store.dispatch(GameActions.updateGame({ payload: updateData }));
+        return this.store.dispatch(GameActions.makeMove({ payload: updateData }));
     }
 
     public resetCurrentGame() {
