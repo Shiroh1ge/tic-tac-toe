@@ -7,7 +7,7 @@
                 <app-cell [currentSymbol]="getSymbol(i)"
                           [isDisabled]="currentGame.isGameOver"
                           [isWinningCell]="currentGame.winningLine.includes(i)"
-                          (onMarked)="markCell(i)"
+                          (onMarked)="makeMove(i)"
                 ></app-cell>
             </li>
         </ul>

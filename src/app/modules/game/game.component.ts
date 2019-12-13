@@ -19,7 +19,7 @@ export class GameComponent implements OnInit, OnDestroy {
     constructor(private gameSelectors: GameSelectors, private gameActions: GameActions) {
     }
 
-    public markCell(index: number) {
+    public makeMove(index: number) {
         this.gameActions.makeMove({
             gameId: this.currentGame.id,
             updateData: {
