@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GameSymbol } from '../../models/player.model';
+import { GameSymbol } from '../../../models/player.model';
 
 @Component({
     selector: 'app-cell',

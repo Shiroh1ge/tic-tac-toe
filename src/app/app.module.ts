@@ -8,22 +8,18 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CellComponent } from './game/cell/cell.component';
-import { GameComponent } from './game/game.component';
-import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 import { Effects } from './store/effects';
 import { metaReducers, reducers } from './store/store';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        GameComponent,
-        CellComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
+        CoreModule,
         AppRoutingModule,
-        SharedModule,
         EffectsModule.forRoot([...Effects]),
         StoreModule.forRoot(reducers, {
             metaReducers,
